@@ -1,0 +1,18 @@
+﻿@model BooksStore.Domain.Entities.Cart
+<span class="navbar-text ml-auto text-light">
+    <b class="d-none d-md-inline">Your Cart:</b>
+    @Model.Items.Sum(i => i.Quantity) item(s),
+    @Model.TotalValue().ToString("c")
+</span>
+<ul class="nav navbar-nav ml-md-4 d-none d-md-inline">
+    <li class="nav-item">
+        @Html.ActionLink("Checkout", "Index", "Cart", new { returnUrl = Request.Url.PathAndQuery }, new { @class = "nav-link btn btn-dark" })
+    </li>
+</ul>
+<ul class="nav navbar-nav ml-md-4 d-md-none">
+    <li class="nav-item">
+        <a class="nav-link btn btn-dark" href="@Url.Action("Index","Cart",new { returnUrl = Request.Url.PathAndQuery })">
+            <i class="fas fa-shopping-cart fa-2x"></i>
+        </a>
+    </li>
+</ul>

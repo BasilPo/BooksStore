@@ -1,0 +1,35 @@
+﻿@using BooksStore.Domain.Entities
+@model IEnumerable<Book>
+@{
+    ViewBag.Title = "Books Store";
+}
+@Html.Partial("CarouselPartialView")
+<div class="alert alert-dark text-center text-danger bg-light mt-3"><h3>Top Selling Books</h3></div>
+<div class="card-deck">
+    @foreach (var book in Model)
+    {
+    <div class="bookitem card text-center bg-danger text-white">
+        <img class="card-img-top" src="@Url.Action("GetImage", "Book", new { book.BookId })" alt="Book image" />
+        <div class="card-img-overlay d-flex flex-column justify-content-center">
+            @Html.ActionLink("Details", "Details", "Book", new { id = book.BookId, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-dark w-50 mx-auto invisible" })
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">@book.Title</h4>
+            <p class="card-text">
+                @foreach (var author in book.Authors)
+                {
+                    if (author == book.Authors.Last())
+                    {
+                        @author.Name
+                    }
+                    else
+                    {
+                        @author.Name@:,
+                    }
+                }
+            </p>
+        </div>
+        <div class="card-footer border-0 pt-0 bg-danger"><span class="badge badge-pill badge-dark" style="font-size:1em;">@book.Price.ToString("c")</span></div>
+    </div>
+    }
+</div>

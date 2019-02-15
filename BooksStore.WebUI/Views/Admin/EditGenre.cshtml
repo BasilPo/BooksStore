@@ -1,0 +1,23 @@
+﻿@model BooksStore.Domain.Entities.Genre
+@{
+    ViewBag.Titles = "Admin: Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card">
+    <h2 class="card-header">Edit: @Model.Name</h2>
+    @using (Html.BeginForm("EditGenre","Admin"))
+    {
+    <div class="card-body">
+        @Html.ValidationSummary()
+        @Html.HiddenFor(g => g.GenreId)
+        <div class="form-group">
+            <label>Name</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+        <div class="card-footer">
+            <input type="submit" value="Save" class="btn btn-outline-info" />
+            @Html.ActionLink("Cancel", "ListGenre", null, new { @class = "btn btn-outline-danger" })
+        </div>
+    }
+</div>

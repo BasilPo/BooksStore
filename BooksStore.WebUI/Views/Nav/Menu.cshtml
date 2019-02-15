@@ -1,0 +1,33 @@
+﻿@model IEnumerable<string>
+    @{ 
+        bool horizontal = (bool)(ViewContext.RouteData.Values["horizontalLayout"] ?? false);
+        string classCollapse = horizontal ? "collapse" : "";
+        string idCollapse = horizontal ? "collapseMenu" : "";
+    }
+<nav class="nav nav-pills nav-fill flex-column">
+    @if (horizontal)
+    {
+    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseMenu">
+        <i class="fas fa-bars fa-2x"></i>
+    </button>
+    }
+    <div class="@classCollapse" id="@idCollapse">
+        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link nav-item bg-light text-danger mb-1 font-weight-bold" })
+        @Html.ActionLink("All", "List", "Book", new { page = 1 }, new { @class = "nav-link nav-item bg-light text-danger mb-1" })
+        @foreach (var item in Model)
+        {
+            @Html.RouteLink(item,
+         new
+         {
+             controller = "Book",
+             action = "List",
+             genre = item,
+             page = 1
+         }, new
+         {
+             @class = "nav-link nav-item bg-danger text-light mb-1" + (item == ViewBag.SelectedGenre ? " bg-dark" : "")
+            }
+            )
+        }
+    </div>
+</nav>

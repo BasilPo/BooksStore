@@ -1,0 +1,21 @@
+﻿.bookitem:hover .card-img-top {
+    opacity:0.3!important;
+}
+
+.bookitem:hover .card-body {
+    opacity: 0.3 !important;
+}
+
+.bookitem:hover .card-footer {
+    opacity: 0.3 !important;
+}
+
+.bookitem:hover a{
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:100!important;
+}
+
+.booklistitem:hover {
+    opacity:0.4!important;
+}

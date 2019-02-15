@@ -1,0 +1,40 @@
+﻿@using BooksStore.WebUI.Models
+@model BooksListViewModel
+@{
+    ViewBag.Title = "Books";
+}
+@foreach (var book in Model.Books)
+{
+<div class="booklistitem card bg-dark text-light mb-2">
+    <a href="@Url.Action("Details", "Book", new { id = book.BookId, returnUrl = Request.Url.PathAndQuery })" style="text-decoration:none;color:inherit;">
+        <img class="img-thumbnail  d-block d-md-none mx-auto mt-3" src="@Url.Action("GetImage", "Book", new { book.BookId })" />
+        <div class="card-body row">
+            <div class="col-md-3 d-none d-md-block">
+                <img class="rounded" src="@Url.Action("GetImage", "Book", new { book.BookId })" />
+            </div>
+            <div class="col-12 col-md-9">
+                <div class="clearfix">
+                    <h3 class="card-title float-md-left">@book.Title</h3>
+                    <h3><span class="badge badge-pill badge-danger float-md-right">@book.Price.ToString("c")</span></h3>
+                </div>
+                <h5>
+                    @foreach (var author in book.Authors)
+                    {
+                        if (author == book.Authors.Last())
+                        {
+                            @author.Name
+                        }
+                        else
+                        {
+                            @author.Name@:,
+                        }
+                    }
+                </h5>
+            </div>
+        </div>
+    </a>
+</div>
+}
+<ul class="pagination pagination-sm justify-content-center">
+    @Html.Pagination(Model.PagingInfo, i => Url.Action("List", new { page = i, genre = Model.CurrentGenre }))
+</ul>

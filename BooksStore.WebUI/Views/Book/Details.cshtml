@@ -1,0 +1,71 @@
+﻿@model BooksStore.Domain.Entities.Book
+@{
+    ViewBag.Title = "Details";
+}
+<div class="card">
+    <h3 class="card-header text-danger">@Model.Title</h3>
+    <div class="card-body row">
+        <div class="col-4 text-left">
+            <span class="badge badge-danger" style="font-size:1.5em;">@Model.Price.ToString("c")</span>
+        </div>
+        <div class="col-4 text-center">
+            <img class="img-fluid rounded" src="@Url.Action("GetImage", "Book", new { Model.BookId })" />
+        </div>
+        <div class="col-4 text-right">
+            @using (Html.BeginForm("AddToCart", "Cart"))
+            {
+                @Html.HiddenFor(i=>i.BookId)
+                @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
+                <input type="submit" class="btn btn-danger" value="Buy" />
+            }
+        </div>
+    </div>
+    <table class="table table-striped table-dark table-borderless mb-0">
+        <tbody>
+            <tr>
+                <th scope="row">Description</th>
+                <td>@Model.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Genre</th>
+                <td>
+                    @foreach (var genre in Model.Genres)
+                    {
+                        if (genre == Model.Genres.Last())
+                        {
+                            @genre.Name
+                        }
+                        else
+                        {
+                            @genre.Name@:,
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Number of pages</th>
+                <td>@Model.PagesNumber</td>
+            </tr>
+            <tr>
+                <th scope="row">Year of publication</th>
+                <td>@Model.PublicationYear</td>
+            </tr>
+            <tr>
+                <th scope="row">Author</th>
+                <td>
+                    @foreach (var author in Model.Authors)
+                    {
+                        if (author == Model.Authors.Last())
+                        {
+                            @author.Name
+                        }
+                        else
+                        {
+                            @author.Name@:,
+                        }
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

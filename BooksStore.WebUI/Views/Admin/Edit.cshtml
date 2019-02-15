@@ -1,0 +1,80 @@
+﻿@using BooksStore.Domain.Entities
+@model BooksStore.Domain.Entities.Book
+@{
+    ViewBag.Titles = "Admin: Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card">
+    <h2 class="card-header">Edit: @Model.Title</h2>
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="card-body">
+        @Html.HiddenFor(b => b.BookId)
+        @foreach (var property in ViewData.ModelMetadata.Properties)
+        {
+            if (property.PropertyName != "BookId" && property.PropertyName != "Authors" && property.PropertyName != "Genres"
+                && property.PropertyName != "ImageData" && property.PropertyName != "ImageMimeType") 
+            {
+                <div class="form-group">
+                    <label>@(property.DisplayName ?? property.PropertyName)</label>
+                    @if (property.PropertyName == "Description")
+                    {
+                        @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                    }
+                    else
+                    {
+                        @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                    }
+                    @Html.ValidationMessage(property.PropertyName)
+                </div>
+            }
+        }
+        <div class="form-group">
+            <label>Genres</label>
+            @foreach (Genre genre in ViewBag.Genres)
+            {
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"
+                               name="selectedGenres" value="@genre.GenreId"
+                               @if (Model.Genres.Any(g => g.Name == genre.Name)) { @: checked
+                               } />@genre.Name
+                        </label>
+                    </div>
+                }
+        </div>
+        <div class="form-group">
+            <label>Authors</label>
+            @foreach (Author author in ViewBag.Authors)
+            {
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"
+                               name="selectedAuthors" value="@author.AuthorId"
+                               @if (Model.Authors.Any(a => a.Name == author.Name)) { @: checked
+                               } />@author.Name
+                        </label>
+                    </div>
+                }
+        </div>
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label" id="upload-file-info">Image</label>
+                <input type="file" class="custom-file-input" lang="es" name="Image" onchange='$("#upload-file-info").html($(this).val());' />
+            </div>
+            @if (Model.ImageData == null)
+            {
+                <div class="form-control-plaintext">No image</div>
+            }
+            else
+            {
+                <img class="img-thumbnail" src="@Url.Action("GetImage", "Book", new { Model.BookId })" />
+            }
+        </div>
+    </div>
+        <div class="card-footer">
+            <input type="submit" value="Save" class="btn btn-outline-info" /> 
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-outline-danger" })
+        </div>
+    }
+</div>

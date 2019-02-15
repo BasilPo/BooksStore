@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Online store selling books" />
+    <meta name="keywords" content="books, online, store" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #ccc !important;
+        }
+        .page-item .page-link {
+            color: #dc3545;
+        }
+        .page-item.disable .page-link {
+            color: #343a40;
+        }
+        .page-item.active .page-link {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-danger navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">BOOKS STORE</a>
+        <button class="navbar-toggler btn-outline-dark" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            @Html.Action("Summary", "Cart")
+        </div>
+    </nav>
+    <div class="container mt-5 pt-4">
+        <div class="bg-dark p-2 rounded position-fixed d-md-none w-auto pre-scrollable mt-n3" style="z-index:100;right:0em;left:0em">
+            @Html.Action("Menu", "Nav", new { horizontalLayout = true })
+        </div>
+        <div class="row mt-5 mt-md-0">
+            <div class="col-md-3 d-none d-md-block">
+                @Html.Action("Menu","Nav")
+            </div>
+            <div class="col-12 col-md-9 mt-3 mt-md-0">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <footer class="jumbotron jumbotron-fluid bg-dark text-light text-center mb-0 mt-3">
+        <p>Online Store &quot;Books Store&quot; &copy; @System.DateTime.Now.Year</p>
+    </footer>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

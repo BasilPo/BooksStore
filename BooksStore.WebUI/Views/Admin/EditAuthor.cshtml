@@ -1,0 +1,23 @@
+﻿@model BooksStore.Domain.Entities.Author
+@{
+    ViewBag.Titles = "Admin: Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card">
+    <h2 class="card-header">Edit: @Model.Name</h2>
+    @using (Html.BeginForm("EditAuthor","Admin"))
+    {
+    <div class="card-body">
+        @Html.ValidationSummary()
+        @Html.HiddenFor(a => a.AuthorId)
+        <div class="form-group">
+            <label>Name</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+        <div class="card-footer">
+            <input type="submit" value="Save" class="btn btn-outline-info" />
+            @Html.ActionLink("Cancel", "Listauthor", null, new { @class = "btn btn-outline-danger" })
+        </div>
+    }
+</div>
